@@ -1,6 +1,6 @@
 import React from 'react';
-import svg from "../../../../public/AlgeriePoste.svg";
-import { Icon } from "@chakra-ui/react";
+import Svg from "../../../assets/img/dashboards/AlgeriePoste.svg 1.svg";
+import { Image } from "@chakra-ui/react";
 import { useState } from "react";
 import { Row, Col, Drawer } from "antd";
 import { withTranslation, TFunction } from "react-i18next";
@@ -61,7 +61,7 @@ const Header = ({ t }: { t: TFunction }) => {
         <Row justify="space-between">
           <LogoContainer to="/dashboard/home" aria-label="homepage">
             {/* <SvgIcon src="logo.svg" width="200px" height="80px" /> */}
-            <Icon ></Icon>
+            <Image src={Svg} maxH={50} />
           </LogoContainer>
           <NotHidden>
             <MenuItem />

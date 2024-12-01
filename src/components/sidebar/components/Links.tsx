@@ -37,7 +37,8 @@ export function SidebarLinks(props: { routes: RouteType[] }) {
 				route.path.startsWith('/reset-password') ||
 				route.path === '/forgot-password' ||
 				route.path === '/check' ||
-				route.path === '/check-secours'
+				route.path === '/check-secours' ||
+				route.path === '*'
 				;
 
 			if (

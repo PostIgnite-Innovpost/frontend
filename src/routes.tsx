@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Icon } from "@chakra-ui/react";
-
+import Error from "./views/404";
 import {
   MdPerson,
   MdLock,
@@ -20,6 +20,8 @@ import LogInCentered from "./views/auth/logIn";
 
 import AddNewCcp from "./views/admin/home/components/AddNewccp";
 import ScanDocument from "./views/admin/home/components/ScanDocument";
+import path from "path";
+import { icons } from "antd/lib/image/PreviewGroup";
 
 const routes = [
 
@@ -111,6 +113,13 @@ const routes = [
   //   icon: <Icon as={MdGroups} width="20px" height="20px" color="inherit" />,
   //   component: <Yournetwork />,
   // },
+  {
+    name: "404",
+    layout: "/",
+    path: "*",
+    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+    component: <Error />
+  }
 ];
 
 export default routes;

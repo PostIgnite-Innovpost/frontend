@@ -10,7 +10,7 @@ const Error: React.FC<ErrorProps> = ({ header }) => {
     const navigate = useNavigate();
 
     return (
-        <Flex direction={'column'} width={'100%'} height={'auto'}>
+        <Flex direction={'column'} width={'100vw'} height={'100vh'}>
             {!header && <Header />}
             <Flex justify={'center'} height={'100%'} align={'center'} direction={'column'} mt={28} background={'#fff'} borderRadius={'lg'}>
                 <Text fontSize={'7xl'} color={'#22297C'} fontWeight={'semibold'} textShadow={'-2px 4px 5px rgba(0,0,0,0.25)'}>Oops...</Text>

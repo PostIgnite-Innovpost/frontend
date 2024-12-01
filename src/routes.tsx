@@ -18,8 +18,8 @@ import LogInCentered from "./views/auth/logIn";
 
 // import Yournetwork from 'views/admin/yournetwork';
 
-import AddNewCcp from "views/admin/home/components/AddNewccp";
-import ScanDocument from "views/admin/home/components/ScanDocument";
+import AddNewCcp from "./views/admin/home/components/AddNewccp";
+import ScanDocument from "./views/admin/home/components/ScanDocument";
 
 const routes = [
 

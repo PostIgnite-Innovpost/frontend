@@ -26,9 +26,7 @@ import { RootState } from '../../../redux/store';
 const Header = ({ t }: { t: TFunction }) => {
   const [visible, setVisibility] = useState(false);
 
-  const token = useSelector((state: RootState) => state.token.token);
-
-
+  const user = useSelector((state: RootState) => state.user.userId);
   const toggleButton = () => {
     setVisibility(!visible);
   };
@@ -47,9 +45,9 @@ const Header = ({ t }: { t: TFunction }) => {
           style={{ width: "180px" }}
         >
           <Span>
-          <NavLink to={token ? "/dashboard/home" : "/auth/login"}>
-            <Button>{t("Get Started")}</Button>
-          </NavLink>
+            <NavLink to={user ? "/dashboard/home" : "/auth/login"}>
+              <Button>{t("Get Started")}</Button>
+            </NavLink>
           </Span>
         </CustomNavLinkSmall>
       </>

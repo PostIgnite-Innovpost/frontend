@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
 import {
-  Box,
   Button,
   Flex,
   Image,
-  Icon,
-  Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import Profile from "./components/Profile";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store"; // Ensure this import is correct
 import { setUser, UserInfo } from "../../../redux/userSlice"; // Adjust the path as necessary
 import Navbar from "../navbar/navbar";
 import post from "../../../assets/img/dashboards/AlgeriePoste.svg 1.svg";
@@ -19,8 +14,6 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const user = useSelector((state: any) => state.user) as UserInfo;
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.token.token); // Assuming you store the token in Redux
-  console.log("user token: ", token);
   const navigate = useNavigate();
   // fetching lands data:
   // const fetchLands = async () => {
@@ -80,7 +73,6 @@ export default function Home() {
             lastName: "FEDDAG",
             email: "amel.feddag@ensia.edu.dz",
             phoneNumber: "+213 555 05 04 96",
-            country: "Algeria",
             userId: "",
             profilePicture: "",
             currentPlan: "Basic",

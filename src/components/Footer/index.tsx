@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const token = useSelector((state: RootState) => state.token.token);
+  const user = useSelector((state: RootState) => state.user.userId);
 
   return (
     <FooterContainer>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
           <Buttoncontainer>
             <ButtonsText>For a Greener Africa, a Better Africa...</ButtonsText>
             <Buttons>
-              <NavLink to={token ? "/dashboard/home" : "/auth/login"}>
+              <NavLink to={user ? "/dashboard/home" : "/auth/login"}>
                 <Button variant="blue">Get Started</Button>
               </NavLink>
               <Button variant="dark" onClick={handleScrollUp}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { NavLink } from "react-router-dom";
-
+import toast from 'react-hot-toast'
 // Chakra imports
 import {
   Box,
@@ -32,17 +32,9 @@ function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
-  const [selectedCountryCode, setSelectedCountryCode] =
-    useState<string>("+213");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCountryCode(e.target.value);
-    console.log("curent country code: ", selectedCountryCode);
-  };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
@@ -64,8 +56,6 @@ function SignUp() {
   };
 
   const registerUser = async () => {
-    // Clear any previous messages
-    setMessage("");
 
     // Client-side validation
     if (
@@ -75,72 +65,49 @@ function SignUp() {
       !password ||
       !phoneNumber
     ) {
-      setMessage("Please fill in all required fields.");
-      setMessageColor("red");
+      toast.error("Please fill in all required fields.");
       return;
     }
 
     if (!validateEmail(email)) {
-      setMessage("Please enter a valid email address.");
-      setMessageColor("red");
+      toast.error("invalid email")
       return;
     }
 
     if (!validatePassword(password)) {
-      setMessage(
+      toast.error(
         "Password must be at least 8 characters long and include numbers and special characters."
       );
-      setMessageColor("red");
       return;
     }
 
     setLoading(true);
-    setMessageColor("green");
-    setMessage(
-      "Processing your registration. This may take a few moments, please wait..."
-    );
 
+    const fullname = firstName + " " + lastName;
     try {
       const userData = {
-        firstName,
-        lastName,
-        phoneNumber: `${selectedCountryCode}${phoneNumber}`,
+        fullname,
+        isAdmin: false,
+        phoneNumber: `${phoneNumber}`,
         email,
         password,
       };
-
       const response = await apiCall("/auth/register", {
         method: "POST",
         data: userData,
+        headers: {
+          "Content-Type": "application/json",
+        }
       });
 
-      if ((response.message = "E-mail already in use.")) {
-        setMessageColor("red");
-        setMessage(response.message);
-      } else if (response.message) {
-        setMessageColor("green");
-        setMessage(response.message);
-      } else {
-        setMessage("Registration successful!");
-        setMessageColor("green");
-      }
-    } catch (error: any) {
-      // Differentiating between different types of errors
-      if (error.response && error.response.data) {
-        setMessage(
-          error.response.data.message ||
-          "Something went wrong, please try again."
-        );
-      } else if (error.request) {
-        setMessage(
-          "Network error: Unable to reach the server. Please check your internet connection."
-        );
-      } else {
-        setMessage("An unexpected error occurred. Please try again later.");
-      }
-      setMessageColor("red");
-    } finally {
+      toast.success(response.data.message)
       setLoading(false);
+    }
+    catch (e: any) {
+      toast.error(e?.response.data.detail)
+    }
+    finally {
+      console.log('success')
     }
   };
 
@@ -216,8 +183,6 @@ function SignUp() {
               placeholder="Email"
               mb="24px"
             />
-            <FormLabel color="navy.700">Country</FormLabel>
-            <Box mb={4}></Box>
             <FormLabel color="navy.700">Phone Number</FormLabel>
             <Box display="flex" alignItems="center">
               <Input
@@ -246,11 +211,6 @@ function SignUp() {
                 />
               </InputRightElement>
             </InputGroup>
-            {message && (
-              <Text color={messageColor} mb="24px">
-                {message}
-              </Text>
-            )}
             <Button
               /* onClick={handleSignUp} */ onClick={registerUser}
               fontSize="sm"
@@ -259,6 +219,7 @@ function SignUp() {
               w="100%"
               h="50px"
               mb="24px"
+              disabled={loading || !firstName || !lastName || !email || !password || !phoneNumber}
             >
               Sign Up
             </Button>

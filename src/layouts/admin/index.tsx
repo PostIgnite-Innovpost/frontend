@@ -5,7 +5,6 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "../../routes";
-import images from "./onboarding/images"; //import images for onboarding
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Dashboard(props: { [x: string]: any }) {
@@ -15,78 +14,6 @@ export default function Dashboard(props: { [x: string]: any }) {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const steps = [
-    {
-      content: (
-        <div>
-          <p>
-            👋 Welcome, User! This is a quick tour to help you get familiar with
-            the platform.
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: ".selected-land", // Target element class
-      content: (
-        <div>
-          <p>Here you can see the selected land details.</p>
-          <img
-            src={images.selectedLand}
-            alt="Selected Land"
-            style={{ width: "100%" }}
-          />
-        </div>
-      ),
-    },
-    {
-      selector: "", // Target element class
-      content: (
-        <div>
-          <p>Click here to add a new land to your profile.</p>
-        </div>
-      ),
-    },
-    {
-      selector: "", // Target element class
-      content: (
-        <div>
-          <p>These are the other lands you have.</p>
-          <img
-            src={images.otherLands}
-            alt="Other Lands"
-            style={{ width: "100%" }}
-          />
-        </div>
-      ),
-    },
-    {
-      selector: ".sidebar", // Target element class
-      content: (
-        <div>
-          <p>
-            This is the sidebar where you can navigate to other sections, and
-            get to know them.
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: "", // Target element class
-      content: (
-        <Button
-          p={4}
-          m={4}
-          bg={"#2BCC33"}
-          color={"white"}
-          onClick={() => navigate("/dashboard/profile/onboarding")}
-        >
-          Go to Profile Onboarding
-        </Button>
-      ),
-    },
-  ];
-
   useEffect(() => {
     if (location.pathname === "/dashboard/home/onboarding") {
       setTimeout(() => {
@@ -154,15 +81,7 @@ export default function Dashboard(props: { [x: string]: any }) {
             </Box>
           ) : null}
         </Box>
-        {showOnboarding && (
-          <Tour
-            steps={steps}
-            isOpen={showOnboarding}
-            onRequestClose={() => setShowOnboarding(false)}
-            rounded={5} // Customize tooltip style
-            accentColor="#5cb85c" // Customize accent color
-          />
-        )}
+
       </SidebarContext.Provider>
     </Box>
   );

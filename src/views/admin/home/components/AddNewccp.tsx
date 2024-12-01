@@ -59,7 +59,6 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
     {}
   );
 
-  const token = useSelector((state: RootState) => state.token.token);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
@@ -95,13 +94,11 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
       await apiCall(
         "/model/generate-business-plan",
         { method: "POST", data: { Ccp_id: ccpId }, requireAuth: true },
-        token
       );
 
       await apiCall(
         `/Ccp/get-Ccp/${ccpId}`,
         { method: "GET", requireAuth: true },
-        token
       );
 
       setTimeout(() => {

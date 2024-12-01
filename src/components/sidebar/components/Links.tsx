@@ -17,7 +17,7 @@ export function SidebarLinks(props: { routes: RouteType[] }) {
 	const location = useLocation();
 	const activeColor = useColorModeValue('gray.700', 'white');
 	const inactiveColor = useColorModeValue('secondaryGray.600', 'secondaryGray.600');
-	const activeIcon = useColorModeValue('brand.500', 'white');
+	const activeIcon = useColorModeValue('#22297C', 'white');
 	const textColor = useColorModeValue('secondaryGray.500', 'white');
 	const brandColor = useColorModeValue('brand.500', 'brand.400');
 
@@ -53,8 +53,8 @@ export function SidebarLinks(props: { routes: RouteType[] }) {
 									py="5px"
 									ps="10px"
 								>
-									<Flex w="100%" alignItems="center" justifyContent="center">
-										<Box color={activeRoute(route.path.toLowerCase()) ? activeIcon : textColor} me="18px">
+									<Flex w="100%" alignItems="center" justifyContent="center" bg={activeRoute(route.path.toLowerCase()) ? '#fff' : null} padding={3} borderRadius={10} gap={3}>
+										<Box color={activeRoute(route.path.toLowerCase()) ? activeIcon : textColor} >
 											{route.icon}
 										</Box>
 										<Text

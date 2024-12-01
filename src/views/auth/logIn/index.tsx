@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-
+// import 
 import { useNavigate, useLocation } from "react-router-dom";
 
 // Chakra imports
@@ -31,9 +31,8 @@ import illustration from "../../../assets/img/auth/post.svg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
-import { setToken } from "../../../redux/tokenSlice";
 import { apiCall } from "../../../services/api";
-import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 function LogIn() {
   const textColor = useColorModeValue("navy.700", "white");
@@ -45,8 +44,6 @@ function LogIn() {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState(""); // Optional: to color the message
   const [loading, setLoading] = useState(false);
   const [showOnBoarding, setShowOnBoarding] = useState(false);
 
@@ -64,7 +61,6 @@ function LogIn() {
   }, [location]);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleClick = () => setShow(!show);
 
@@ -76,25 +72,25 @@ function LogIn() {
 
   const loginUser = async () => {
     // Clear previous messages
-    setMessage("");
+    // setMessage("");
 
     // Client-side validation
     if (!email || !password) {
-      setMessage("Please fill in both email and password.");
-      setMessageColor("red");
+      // setMessage("Please fill in both email and password.");
+      // setMessageColor("red");
       return;
     }
 
     if (!validateEmail(email)) {
-      setMessage("Please enter a valid email address.");
-      setMessageColor("red");
+      // setMessage("Please enter a valid email address.");
+      // setMessageColor("red");
       return;
     }
 
     // Proceed with login if inputs are valid
     setLoading(true);
-    setMessage("The request may take some time, please wait...");
-    setMessageColor("blue");
+    // setMessage("The request may take some time, please wait...");
+    // setMessageColor("blue");
 
     try {
       const credentials = {
@@ -105,17 +101,19 @@ function LogIn() {
       const response = await apiCall("/auth/login", {
         method: "POST",
         data: credentials,
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
 
-      if (response.token) {
+      if (response.success) {
         // Store token in Redux
-        console.log(response.message); // Logged in successfully!
-        console.log("Your token: ", response.token);
-        setMessageColor("blue");
-        setMessage("Login successful! Redirecting...");
+        console.log(response.suucess); // Logged in successfully!
+        //console.log("Your token: ", response);
+        // setMessageColor("blue");
+        // setMessage("Login successful! Redirecting...");
 
         setTimeout(() => {
-          dispatch(setToken(response.token));
           if (showOnBoarding) {
             navigate("/dashboard/home/onboarding"); // Redirect to dashboard on successful login
           } else {
@@ -123,19 +121,22 @@ function LogIn() {
           }
         }, 1000);
       } else {
-        setMessageColor("red");
-        setMessage(response.message);
+        // setMessageColor("red");
+        // setMessage(response.message);
+
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
+      // console.log("error", error.response.data);
+      toast.error(error.response.data.detail);
       if (error instanceof Error) {
-        setMessage(
-          "Login failed. Please confirm your credentials and try again."
-        );
-        setMessageColor("red");
+        // setMessage(
+        //   "Login failed. Please confirm your credentials and try again."
+        // );
+        // setMessageColor("red");
       } else {
         // Handle unexpected error types here
-        setMessage("An unexpected error occurred.");
-        setMessageColor("red");
+        // setMessage("An unexpected error occurred.");
+        // setMessageColor("red");
       }
     } finally {
       setLoading(false);
@@ -276,18 +277,18 @@ function LogIn() {
               h="50"
               mb="24px"
               onClick={loginUser}
-              disabled={!email || !password}
+              disabled={!email || !password || loading}
             >
               Log In
             </Button>
-            {message && (
+            {/* {message && (
               <Text
                 color={message.includes("success") ? "green.500" : "red.500"}
                 mb="24px"
               >
                 {message}
               </Text>
-            )}
+            )} */}
           </FormControl>
         </Flex>
         <Flex

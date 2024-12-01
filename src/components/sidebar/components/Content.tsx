@@ -16,11 +16,11 @@ function SidebarContent(props: { routes: RoutesType[] }) {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    window.location.href = '/'; // Redirect to homepage
+    window.location.href = '/dashboard/home'; // Redirect to homepage
     dispatch({ type: LOGOUT });
     // setTimeout(() => {
     // }, 1000)
-  };  
+  };
 
   // SIDEBAR
   return (
@@ -32,7 +32,7 @@ function SidebarContent(props: { routes: RoutesType[] }) {
           <Flex
             color={'#8f9bba'}
             align={'center'}
-            padding='5px 10px'
+            padding='25px'
             gap={'20px'}
             onClick={handleLogout}
             style={{ cursor: 'pointer' }}

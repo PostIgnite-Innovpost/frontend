@@ -24,7 +24,7 @@ import { RootState } from '../../redux/store';
 
 
 const Header = ({ t }: { t: TFunction }) => {
-  const token = useSelector((state: RootState) => state.token.token);
+  const user = useSelector((state: RootState) => state.user.userId);
 
   const [visible, setVisibility] = useState(false);
 
@@ -59,9 +59,9 @@ const Header = ({ t }: { t: TFunction }) => {
           onClick={() => scrollTo("contact")}
         >
           <Span>
-          <NavLink to={token ? "/dashboard/home" : "/auth/login"}>
-            <Button>{t("Get Started")}</Button>
-          </NavLink>
+            <NavLink to={user ? "/dashboard/home" : "/auth/login"}>
+              <Button>{t("Get Started")}</Button>
+            </NavLink>
           </Span>
         </CustomNavLinkSmall>
       </>

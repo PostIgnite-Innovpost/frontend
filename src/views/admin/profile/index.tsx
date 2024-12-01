@@ -25,7 +25,7 @@ import Tour from "reactour";
 import Navbar from "../navbar/navbar";
 
 const UserProfile: React.FC = () => {
-  const token = useSelector((state: RootState) => state.token.token);
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -62,10 +62,8 @@ const UserProfile: React.FC = () => {
             first_name: formData.firstName,
             last_name: formData.lastName,
             phone_number: formData.phoneNumber,
-            country: user.country,
           },
         },
-        token
       );
 
       setShowInformationUpdate(true);
@@ -105,7 +103,6 @@ const UserProfile: React.FC = () => {
             newPassword: formData.newPassword,
           },
         },
-        token
       );
 
       setShowPasswordUpdate(true);
@@ -137,7 +134,6 @@ const UserProfile: React.FC = () => {
             eMail: formData.email,
           },
         },
-        token
       );
 
       // Show the 'email sent' message
@@ -159,7 +155,6 @@ const UserProfile: React.FC = () => {
   }, [location]);
 
   // Get the user state from the Redux store
-  const user = useSelector((state: any) => state.user);
 
   // Initialize formData with empty values
   const [formData, setFormData] = useState({
@@ -167,7 +162,6 @@ const UserProfile: React.FC = () => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    country: "",
     currentPassword: "",
     newPassword: "",
   });
@@ -180,7 +174,6 @@ const UserProfile: React.FC = () => {
           method: "GET",
           requireAuth: true,
         },
-        token
       );
 
       dispatch(
@@ -189,7 +182,6 @@ const UserProfile: React.FC = () => {
           lastName: profile.last_name,
           email: profile.email,
           phoneNumber: profile.phone_number,
-          country: profile.country,
           userId: profile.user_id,
           profilePicture: profile.profile_picture,
           currentPlan:
@@ -251,7 +243,6 @@ const UserProfile: React.FC = () => {
         lastName: user.lastName,
         phoneNumber: user.phoneNumber,
         email: user.email,
-        country: user.country,
         currentPassword: "",
         newPassword: "",
       });
@@ -380,11 +371,10 @@ const UserProfile: React.FC = () => {
                   display: "flex",
                   width: "80%",
                   gap: "20px",
-                  border: `1px solid ${
-                    !isEditing[field as keyof typeof isEditing]
-                      ? "#78747A"
-                      : "#2ACC32"
-                  }`,
+                  border: `1px solid ${!isEditing[field as keyof typeof isEditing]
+                    ? "#78747A"
+                    : "#2ACC32"
+                    }`,
                   borderRadius: "8px",
                   padding: "0 10px 0 4px",
                 }}
@@ -461,11 +451,10 @@ const UserProfile: React.FC = () => {
                 display: "flex",
                 width: "80%",
                 gap: "20px",
-                border: `1px solid ${
-                  !isEditing["email" as keyof typeof isEditing]
-                    ? "#78747A"
-                    : "#2ACC32"
-                }`,
+                border: `1px solid ${!isEditing["email" as keyof typeof isEditing]
+                  ? "#78747A"
+                  : "#2ACC32"
+                  }`,
                 borderRadius: "8px",
                 padding: "0 10px 0 4px",
               }}

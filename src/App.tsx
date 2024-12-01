@@ -7,25 +7,18 @@ import { ChakraProvider } from "@chakra-ui/react";
 import initialTheme from "./theme/theme";
 import { useState } from "react";
 import Error from "./views/404";
-import { useSelector } from "react-redux";
-import { RootState } from "./redux/store"; // Adjust the import path as needed
 import "./input.css";
-
+import { Toaster } from 'react-hot-toast';
 export default function Main() {
 
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
-  // Get the token from Redux state
-  const token = useSelector((state: RootState) => state.token.token);
 
   return (
     <ChakraProvider theme={currentTheme}>
       <Routes>
-        {!token ? (
-          <Route path="auth/*" element={<AuthLayout />} />
-        ) : (
-          <Route path="auth/*" element={<Error />} />
-        )}
+
+        <Route path="auth/*" element={<AuthLayout />} />
         {/* <Route path="auth/*" element={<AuthLayout />} /> */}
         {/* Conditionally render Admin Layout based on token */}
         {/* {token ? ( */}
@@ -40,6 +33,7 @@ export default function Main() {
         )} */}
         <Route path="*" element={<Error />} />
       </Routes>
+      <Toaster />
     </ChakraProvider>
   );
 }

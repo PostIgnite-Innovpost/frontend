@@ -12,8 +12,8 @@ export function SidebarBrand() {
 
 	return (
 		<Flex alignItems='center' flexDirection='column' >
-			<AgrisistanceLogo/>
-			<HSeparator mb='20px' mt="20px" />
+			<AgrisistanceLogo />
+			<HSeparator />
 		</Flex>
 	);
 }

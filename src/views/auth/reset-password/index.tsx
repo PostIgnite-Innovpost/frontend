@@ -53,8 +53,6 @@ function ResetPassword() {
   };
 
   //! getting token from backend
-  const { token } = useParams<{ token: string }>(); // Extract the token from the URL
-  console.log("The token from the URL is:", token);
 
   const handleResetPassword = async () => {
     // Clear previous messages
@@ -88,8 +86,7 @@ function ResetPassword() {
 
     try {
       const credentials = { newPassword: password };
-      console.log("the token getted from the link is: ", token);
-      const response = await apiCall(`/auth/reset-password/${token}`, {
+      const response = await apiCall(`/auth/reset-password/${''}`, {
         method: "POST",
         data: credentials,
       });

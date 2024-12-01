@@ -2,15 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './userSlice';
-import postsReducer from './postsSlice';
-import tokenReducer from './tokenSlice';
 import { LOGOUT } from './actionTypes';
 
 // Combine your reducers into a root reducer
 const appReducer = combineReducers({
   user: userReducer,
-  posts: postsReducer,
-  token: tokenReducer,
 });
 
 // Root reducer with logout handling
@@ -28,7 +24,7 @@ const rootReducer = (state: ReturnType<typeof appReducer>, action: any) => {
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user', 'lands', 'posts', 'token'], // List of reducers you want to persist
+  whitelist: ['user'], // List of reducers you want to persist
 };
 
 // Create the persisted reducer

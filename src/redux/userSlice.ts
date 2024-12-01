@@ -5,7 +5,6 @@ export interface UserInfo {
   lastName: string;
   email: string;
   phoneNumber: string;
-  country: string;
   userId: string;
   profilePicture: string;
   currentPlan: 'Basic' | 'premium';
@@ -19,7 +18,6 @@ const dummyData: UserInfo = {
   lastName: 'FEDDAG',
   email: 'amel.feddag@ensia.edu.dz',
   phoneNumber: '+213 555 05 04 96',
-  country: 'Algeria',
   userId: '',
   profilePicture: '',
   currentPlan: 'Basic',
@@ -31,7 +29,6 @@ const initialState: UserInfo =  {
   lastName: '',
   email: '',
   phoneNumber: '',
-  country: '',
   userId: '',
   profilePicture: '',
   currentPlan: 'Basic',

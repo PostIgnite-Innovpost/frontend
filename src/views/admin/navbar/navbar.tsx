@@ -5,9 +5,6 @@ import {
   Text,
   Image,
   Switch,
-  useColorMode,
-  Icon,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import avatar from "./avatar.png";

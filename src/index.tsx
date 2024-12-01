@@ -21,12 +21,12 @@ const router = createBrowserRouter(routes);
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <BrowserRouter>
-      <Suspense fallback={null}>
-        <Styles />
-        <App />
-      </Suspense>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Suspense fallback={null}>
+          <Styles />
+          <App />
+        </Suspense>
+      </BrowserRouter>
     </PersistGate>
   </Provider>
 );

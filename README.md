@@ -1,14 +1,14 @@
 # PostIgnite 🌍
 
 <div align="center">
-  <img src="public/img/svg/logo.svg" alt="PostIgnite Logo" width="300"/>
+  <img src="public/img/icons/AlgeriePoste.svg" alt="PostIgnite Logo" width="300"/>
 </div>
 
 **PostIgnite** is an AI-powered platform designed to streamline interactions with Poste Algérie. By leveraging Optical Character Recognition (OCR) technology, it simplifies form-filling, document processing, and task management for both employees and users.
 
 ---
 
-![PostIgnite Landing Page](public/img/icons/landing.png)
+![PostIgnite Landing Page]()
 
 ## Table of Contents
 

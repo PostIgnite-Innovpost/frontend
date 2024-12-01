@@ -15,14 +15,9 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Icon,
-  Select,
 } from "@chakra-ui/react";
-import { MdOutlineRemoveRedEye, MdArrowDropDown } from "react-icons/md";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import DefaultAuth from "../../../layouts/auth/Default";
 import illustration from "../../../assets/img/auth/post.svg";
@@ -37,7 +32,6 @@ function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [country, setCountry] = useState("Select your Country");
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
   const [selectedCountryCode, setSelectedCountryCode] =
@@ -79,8 +73,7 @@ function SignUp() {
       !lastName ||
       !email ||
       !password ||
-      !phoneNumber ||
-      country === "Select your Country"
+      !phoneNumber
     ) {
       setMessage("Please fill in all required fields.");
       setMessageColor("red");
@@ -111,7 +104,6 @@ function SignUp() {
       const userData = {
         firstName,
         lastName,
-        country,
         phoneNumber: `${selectedCountryCode}${phoneNumber}`,
         email,
         password,
@@ -137,7 +129,7 @@ function SignUp() {
       if (error.response && error.response.data) {
         setMessage(
           error.response.data.message ||
-            "Something went wrong, please try again."
+          "Something went wrong, please try again."
         );
       } else if (error.request) {
         setMessage(

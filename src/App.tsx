@@ -9,9 +9,13 @@ import { useState } from "react";
 import Error from "./views/404";
 import "./input.css";
 import { Toaster } from 'react-hot-toast';
+import { Root } from "postcss";
+import { RootState } from "redux/store";
+import { useSelector } from "react-redux";
 export default function Main() {
 
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
+  const userid = useSelector((state: RootState) => state.user.userId);
 
 
   return (
@@ -21,19 +25,20 @@ export default function Main() {
         <Route path="auth/*" element={<AuthLayout />} />
         {/* <Route path="auth/*" element={<AuthLayout />} /> */}
         {/* Conditionally render Admin Layout based on token */}
-        {/* {token ? ( */}
-        <Route
-          path="dashboard/*"
-          element={
-            <AdminLayout theme={currentTheme} setTheme={setCurrentTheme} />
-          }
-        />
-        {/* ) : (
+        {userid ? (
+          <Route
+            path="dashboard/*"
+            element={
+              <AdminLayout theme={currentTheme} setTheme={setCurrentTheme} />
+            }
+          />
+        ) : (
           <Route path="dashboard/*" element={<Error />} />
-        )} */}
+        )}
         <Route path="*" element={<Error />} />
       </Routes>
       <Toaster />
     </ChakraProvider>
   );
 }
+

@@ -4,7 +4,7 @@ import { Avatar, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import Card from '../../../../components/card/Card';
 import { UserInfo } from '../../../../redux/userSlice';
 import { useSelector } from 'react-redux';
-import avatar from '../../Navbar/avatar.png';
+import avatar from '../../navbar/avatar.png';
 
 
 export default function Profile() {

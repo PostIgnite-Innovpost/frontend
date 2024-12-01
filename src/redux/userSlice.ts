@@ -44,6 +44,9 @@ const userSlice = createSlice({
     updateUser: (state, action: PayloadAction<Partial<UserInfo>>) => {
       return { ...state, ...action.payload };
     },
+    logoutUser:(state, action:PayloadAction<UserInfo>) => {
+      return initialState;
+    }
   },
 });
 

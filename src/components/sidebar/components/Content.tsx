@@ -18,8 +18,6 @@ function SidebarContent(props: { routes: RoutesType[] }) {
   const handleLogout = () => {
     window.location.href = '/dashboard/home'; // Redirect to homepage
     dispatch({ type: LOGOUT });
-    // setTimeout(() => {
-    // }, 1000)
   };
 
   // SIDEBAR

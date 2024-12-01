@@ -29,7 +29,7 @@ interface CheckSecoursProps {
     date?: string;
     signature?: Blob | string;
     type?: string;
-    image?: string;
+    file?: string;
 }
 
 export default function CheckSecours({
@@ -49,7 +49,7 @@ export default function CheckSecours({
     date,
     signature,
     type,
-    image,
+    file,
 }: CheckSecoursProps) {
     const signatureUrl =
         typeof signature === 'string' ? signature : URL.createObjectURL(signature);
@@ -140,11 +140,9 @@ export default function CheckSecours({
             </Flex>
 
             {/* Document Image */}
-            {image && (
-                <Box mt={6} borderWidth="1px" borderRadius="md" overflow="hidden">
-                    <Image src={image} alt="Document" maxH="300px" objectFit="contain" />
-                </Box>
-            )}
+            <Box mt={6} borderWidth="1px" borderRadius="md" overflow="hidden">
+                <Image src={file} alt="Document" maxH="300px" objectFit="contain" />
+            </Box>
 
             <Flex gap={4}>
                 <Button color='white' width='fit' colorScheme='yellow' onClick={toggleEditable}>

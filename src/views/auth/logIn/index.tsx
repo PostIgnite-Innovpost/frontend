@@ -24,7 +24,6 @@ import DefaultAuth from "../../../layouts/auth/Default";
 import illustration from "../../../assets/img/auth/post.svg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-import { apiCall } from "../../../services/api";
 import toast from "react-hot-toast";
 import axios from "axios";
 

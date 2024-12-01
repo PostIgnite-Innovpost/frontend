@@ -33,6 +33,7 @@ interface ResultData {
     date: string;
     signature: string;
     type: string;
+    path: string;
 }
 
 interface Result {
@@ -46,15 +47,17 @@ export default function ScanDocument() {
     const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const [response, setResponse] = useState<Result | null>(null);
+    const [file, setFile] = useState<File | null>(null);  // Changed type to File
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+        const selectedFile = e.target.files?.[0];
 
-        if (!file) {
+        if (!selectedFile) {
             setError("No file selected.");
             return;
         }
 
+        setFile(selectedFile);  // Update file state
         setError(null);
         setLoading(true);
 
@@ -80,7 +83,8 @@ export default function ScanDocument() {
                     date: "2022-01-01",
                     signature: "https://via.placeholder.com/150",
                     type: "checksecours",
-                },
+                    path: "path/to/document"  // Example file path
+                }
             };
             setResponse(simulatedResult);
             if (simulatedResult.type === "check") {
@@ -91,6 +95,7 @@ export default function ScanDocument() {
                 toast.error("Invalid document type.");
             }
         } catch (err) {
+            console.error(err);  // Log the error for debugging
             setError("An error occurred while processing the document.");
         } finally {
             setLoading(false);
@@ -126,6 +131,7 @@ export default function ScanDocument() {
                                     fontSize={{ base: "16px", md: "22px" }}
                                     gap={4}
                                     cursor="pointer"
+                                    isLoading={loading}  // Disable button during loading
                                 >
                                     <Icon as={FiUpload} fontSize="60px" />
                                     Upload Document
@@ -199,6 +205,7 @@ export default function ScanDocument() {
                     receiverPhone={response.data.receiverPhone}
                     date={response.data.date}
                     signature={response.data.signature}
+                    file={response.data.path}
                 />
             )}
         </Flex>

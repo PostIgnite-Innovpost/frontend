@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+body {
+  font-family: "DM Sans", sans-serif !important;
+}
+
+option {
+  color: black;
+}
+
+.large-image {
+  max-width: 600px; /* Ensure image doesn't exceed this width */
+  width: 100%; /* Adjust to fit within the container */
+  height: auto; /* Maintain aspect ratio */
+}

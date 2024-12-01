@@ -61,17 +61,6 @@ export default function Dashboard(props: { [x: string]: any }) {
       ),
     },
     {
-      selector: ".chatbot-toggle", // Target element class
-      content: (
-        <div>
-          <p>
-            This is your chatbot "AgriHelper", he is a very kind guy! Feel free
-            to ask him for help whenever you are stuck!
-          </p>
-        </div>
-      ),
-    },
-    {
       selector: ".sidebar", // Target element class
       content: (
         <div>

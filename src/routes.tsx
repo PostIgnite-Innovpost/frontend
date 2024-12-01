@@ -20,35 +20,15 @@ import Profile from "./views/admin/profile/index";
 import SignUpCentered from "./views/auth/signUp";
 import LogInCentered from "./views/auth/logIn";
 
-import LandingPage from "./views/Landing/landingPage";
 // import Yournetwork from 'views/admin/yournetwork';
 
-import Error from "./views/404";
-import Plan from "./views/admin/plan";
-import Yournetwork from "./views/admin/yournetwork";
-import ForgetPassword from "./views/auth/ForgotPassword";
-import ResetPassword from "./views/auth/reset-password";
-import path from "path";
 import CheckSecours from "views/admin/home/components/checksecours";
 import Check from "views/admin/home/components/check";
 import AddNewCcp from "views/admin/home/components/AddNewccp";
 import ScanDocument from "views/admin/home/components/ScanDocument";
 
 const routes = [
-  {
-    name: "Landing Page",
-    layout: "",
-    path: "",
-    icon: (
-      <Icon
-        as={HiOutlineSquares2X2}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
-    component: <LandingPage />,
-  },
+
   {
     name: "Sign Up",
     layout: "/auth",

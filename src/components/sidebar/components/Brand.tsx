@@ -1,9 +1,9 @@
 import React from 'react';
 // Chakra imports
-import { Flex } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 
 // Custom components
-import { AgrisistanceLogo } from '../../Footer/icons/Icons';
+import PostIgnite from '../../../assets/img/dashboards/AlgeriePoste.svg 1.svg';
 import { HSeparator } from '../../../components/separator/Separator';
 
 export function SidebarBrand() {
@@ -12,7 +12,7 @@ export function SidebarBrand() {
 
 	return (
 		<Flex alignItems='center' flexDirection='column' >
-			<AgrisistanceLogo />
+			<Image src={PostIgnite} />
 			<HSeparator />
 		</Flex>
 	);

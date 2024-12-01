@@ -1,31 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import "./assets/css/App.css";
-import { Routes, Route } from "react-router-dom";
+import "./input.css";
+
 import AuthLayout from "./layouts/auth";
 import AdminLayout from "./layouts/admin";
-import { ChakraProvider } from "@chakra-ui/react";
-import initialTheme from "./theme/theme";
-import { useState } from "react";
 import Error from "./views/404";
-import "./input.css";
-import { Toaster } from 'react-hot-toast';
-import { Root } from "postcss";
+import initialTheme from "./theme/theme";
+import { Toaster } from "react-hot-toast";
 import { RootState } from "redux/store";
-import { useSelector } from "react-redux";
+
 export default function Main() {
-
   const [currentTheme, setCurrentTheme] = useState(initialTheme);
-  const userid = useSelector((state: RootState) => state.user.userId);
-
+  const userId = useSelector((state: RootState) => state.user.userId);
 
   return (
     <ChakraProvider theme={currentTheme}>
       <Routes>
+        {/* Redirect / to /dashboard/home */}
+        <Route path="/" element={<Navigate to="/auth/login" replace />} />
 
         <Route path="auth/*" element={<AuthLayout />} />
-        {/* <Route path="auth/*" element={<AuthLayout />} /> */}
-        {/* Conditionally render Admin Layout based on token */}
-        {userid ? (
+        {userId ? (
           <Route
             path="dashboard/*"
             element={
@@ -41,4 +39,3 @@ export default function Main() {
     </ChakraProvider>
   );
 }
-

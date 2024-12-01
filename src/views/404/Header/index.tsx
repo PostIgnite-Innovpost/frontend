@@ -1,10 +1,11 @@
 import React from 'react';
-
+import svg from "../../../../public/AlgeriePoste.svg";
+import { Icon } from "@chakra-ui/react";
 import { useState } from "react";
 import { Row, Col, Drawer } from "antd";
 import { withTranslation, TFunction } from "react-i18next";
 import Container from "../../../components/Container";
-import { SvgIcon } from "../../../components/SvgIcon";
+// import { SvgIcon } from "../../../components/SvgIcon";
 import { Button } from "../../../components/Button";
 import {
   HeaderSection,
@@ -58,8 +59,9 @@ const Header = ({ t }: { t: TFunction }) => {
     <HeaderSection>
       <Container>
         <Row justify="space-between">
-          <LogoContainer to="/" aria-label="homepage">
-            <SvgIcon src="logo.svg" width="200px" height="80px" />
+          <LogoContainer to="/dashboard/home" aria-label="homepage">
+            {/* <SvgIcon src="logo.svg" width="200px" height="80px" /> */}
+            <Icon ></Icon>
           </LogoContainer>
           <NotHidden>
             <MenuItem />

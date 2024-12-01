@@ -3,32 +3,19 @@ import {
   Flex,
   Text,
   Button,
-  Input,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Icon,
   useDisclosure,
-  Progress,
   FormControl,
-  FormLabel,
   FormErrorMessage,
   Box,
   Spinner,
   Center
 } from "@chakra-ui/react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { HiUpload } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Lottie from "react-lottie-player";
-import animationData from "../../../../assets/img/dashboards/cropanimated.json";
 import erroranimated from "../../../../assets/img/dashboards/erroranimated.json";
-import { apiCall } from "../../../../services/api";
-import { RootState } from "../../../../redux/store";
+import axios from "axios";
 
 interface AddNewCcpProps {
   initialStep?: number;
@@ -89,21 +76,13 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
       setloading(true);
       setHasError(true);
 
-      // API call to create Ccp
-      const ccpId = 123; // Simulated response
-      await apiCall(
-        "/model/generate-business-plan",
-        { method: "POST", data: { Ccp_id: ccpId }, requireAuth: true },
-      );
+      const response = await axios.post("https://c11e-41-106-128-126.ngrok-free.app/ccp", formData);
 
-      await apiCall(
-        `/Ccp/get-Ccp/${ccpId}`,
-        { method: "GET", requireAuth: true },
-      );
+
 
       setTimeout(() => {
         setloading(false);
-        navigate("/dashboard/yourCcp");
+        navigate("/dashboard/home");
       }, 2000);
     } catch (error) {
       console.error("Error during ccp creation:", error);
@@ -120,6 +99,9 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
         }}
       >
         <Flex direction="column" align="start " gap="8">
+          <Text fontSize="2xl" fontWeight="bold" >
+            Please upload the following documents
+          </Text>
           <FormControl isInvalid={!!errors.idcard}>
             <Flex direction="column" align="start" gap="10px">
               <label style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -130,7 +112,7 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
                   colorScheme="blue"
                   variant="solid"
                 >
-                  Upload Identity Card
+                  Upload document
                 </Button>
                 <input
                   type="file"
@@ -152,7 +134,7 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
                   colorScheme="blue"
                   variant="solid"
                 >
-                  Upload resident Certificate
+                  Upload document
                 </Button>
                 <input
                   type="file"
@@ -167,14 +149,14 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
           <FormControl isInvalid={!!errors.openRequest}>
             <Flex direction="row" align="center" gap="10px" flexWrap={'wrap'}>
               <label style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                Request of opening a CCP account {"<< CH1 >>"} filled and signed
+                Request of opening a CCP account {"<< CH1 >>"} filled and signed.<a href="">(Examplaire)</a>
                 <Button
                   as="span" // Prevents button default behavior
                   leftIcon={<HiUpload />}
                   colorScheme="blue"
                   variant="solid"
                 >
-                  Upload open Request
+                  Upload document
                 </Button>
                 <input
                   type="file"
@@ -182,9 +164,6 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
                   onChange={(e) => handleFileChange(e, "openRequest")}
                 />
               </label>
-              <Button>
-                Download exampler
-              </Button>
             </Flex>
             <FormErrorMessage>{errors.openRequest}</FormErrorMessage>
           </FormControl>
@@ -194,39 +173,16 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
           </Flex>
         </Flex>
       </form>
-
-      {loading && (
-        <Box
-          pos="absolute"
-          inset="0"
-          bg="rgba(0,0,0,0.5)"
-          backdropBlur="2xl"
-          borderRadius="30px"
-          animation="fadeIn 0.3s ease-in-out"
-        >
-          <Center h="full" display={'flex'} flexDirection={'column'} gap={'10px'}>
-            <Spinner color="blue" size="xl" />
-            <Text color="blue" fontSize="xl" fontWeight="bold">
-              Processing...
-            </Text>
-          </Center>
-        </Box>
-      )}
       {hasError && (
         <Box
-          pos="absolute"
-          inset="0"
-          bg="rgba(0,0,0,0.5)"
-          backdropBlur="2xl"
           borderRadius="30px"
-          animation="fadeIn 0.3s ease-in-out"
         >
           <Center h="full" display={'flex'} flexDirection={'column'} gap={'10px'}>
             <Lottie
               loop
               play
               animationData={erroranimated}
-              style={{ width: "80%", height: "80%" }}
+              style={{ width: "200px", height: "200px" }}
             />
             <Text color="red" fontSize="xl" fontWeight="bold">
               Error during ccp creation
@@ -239,6 +195,24 @@ export default function AddNewCcp({ initialStep = 0 }: AddNewCcpProps) {
           </Center>
         </Box>
       )}
+      {loading && (
+        <Box
+          pos="absolute"
+          inset="0"
+          bg="rgba(0,0,0,0.5)"
+          backdropBlur="2xl"
+          borderRadius="30px"
+          animation="fadeIn 0.3s ease-in-out"
+        >
+          <Center h="full" display={'flex'} flexDirection={'column'} gap={'10px'}>
+            <Spinner color="blue" size="xl" borderWidth={'medium'} />
+            <Text color="blue" fontSize="2xl" fontWeight="bold">
+              Processing...
+            </Text>
+          </Center>
+        </Box>
+      )}
+
     </Flex>
   );
 }

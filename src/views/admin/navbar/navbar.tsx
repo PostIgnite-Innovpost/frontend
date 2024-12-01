@@ -24,49 +24,35 @@ const Navbar: React.FC = () => {
   return (
     <Box
       position="fixed"
-      top="0"
-      right="0"
-      width={{ base: "100%", md: "100%", xl: "83%" }}
+      top="3"
+      right="3"
+      width={{ base: "100%", md: "50%", xl: "30%" }}
       height="82px"
       backgroundColor="white"
       zIndex="5"
-      px={16}
+      borderRadius={20}
+      shadow={{ base: "none", md: "md" }}
     >
       <Flex
         align={{ base: "right", md: "center" }}
-        justify={{ base: "space-between", md: "space-between" }} // Space between on small screens, align right on medium/large
+        justify={'end'} // Space between on small screens, align right on medium/large
         height="100%"
         padding="0 20px"
         boxSizing="border-box"
       >
         <SidebarResponsive routes={routes} />
 
-        <Flex align="center" ml="0">
-          {" "}
-          {/* Add margin to push elements */}
+        <Flex align="center" ml="0" border={'2px solid #22297C'} borderRadius={40} padding={1.5} gap={4}>
+          <Text fontWeight="bold" fontSize="lg">
+            {user.fullName}
+          </Text>
           <Image
-            src={user.profilePicture || avatar}
-            alt={`${user.firstName} ${user.lastName}`}
+            src={avatar}
+            alt={`${user.fullName}`}
             borderRadius="full"
             boxSize="50px"
             objectFit="cover"
-            mr="10px"
-          />
-          <Text fontWeight="bold" fontSize="lg">
-            {user.firstName} {user.lastName}
-          </Text>
-        </Flex>
-
-        <Flex align="center" ml={{ base: "0", md: "20px" }}>
-          {" "}
-          {/* Adjust margin for spacing */}
-          <Text mr="10px" fontSize="md" fontWeight="bold" color="#2ACC32">
-            {user.currentPlan === "Basic" ? "Free Mode" : "Premium"}
-          </Text>
-          <Switch
-            isChecked={user.currentPlan === "premium"}
-            onChange={handleSwitchClick}
-            colorScheme="teal"
+            border={'2px solid #22297C'}
           />
         </Flex>
       </Flex>

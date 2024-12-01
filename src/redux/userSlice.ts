@@ -1,37 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface UserInfo {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phoneNumber: string;
   userId: string;
-  profilePicture: string;
-  currentPlan: 'Basic' | 'premium';
+  isActive:boolean;
+  ccp:string;
+  cle:string;
 }
 
 // Flag to toggle between dummy and real data
 const USE_DUMMY_DATA = false;
 
 const dummyData: UserInfo = {
-  firstName: 'Amel',
-  lastName: 'FEDDAG',
+  fullName: 'Amel',
   email: 'amel.feddag@ensia.edu.dz',
   phoneNumber: '+213 555 05 04 96',
   userId: '',
-  profilePicture: '',
-  currentPlan: 'Basic',
+  isActive:true,
+  ccp:'',
+  cle:''
 };
 
 // const initialState: UserInfo = USE_DUMMY_DATA ? dummyData : {
 const initialState: UserInfo =  {
-  firstName: '',
-  lastName: '',
+  fullName: '',
   email: '',
   phoneNumber: '',
   userId: '',
-  profilePicture: '',
-  currentPlan: 'Basic',
+  isActive:false,
+  ccp:'',
+  cle:'',
 };
 
 const userSlice = createSlice({
@@ -44,11 +44,8 @@ const userSlice = createSlice({
     updateUser: (state, action: PayloadAction<Partial<UserInfo>>) => {
       return { ...state, ...action.payload };
     },
-    activatePremium: (state) => {
-      state.currentPlan = 'premium';
-    },
   },
 });
 
-export const { setUser, updateUser, activatePremium } = userSlice.actions;
+export const { setUser, updateUser} = userSlice.actions;
 export default userSlice.reducer;

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-// import 
-import { useNavigate, useLocation } from "react-router-dom";
-
-// Chakra imports
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Alert,
   AlertDescription,
@@ -24,125 +20,74 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// Custom components
 import DefaultAuth from "../../../layouts/auth/Default";
-// Assets
 import illustration from "../../../assets/img/auth/post.svg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-
 import { apiCall } from "../../../services/api";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 function LogIn() {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorBrand = useColorModeValue("#22297C", "white");
-  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
   const brandStars = useColorModeValue("brand.500", "brand.400");
+  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
 
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showOnBoarding, setShowOnBoarding] = useState(false);
-
   const [showEmailVerificationAlert, setShowEmailVerificationAlert] =
     useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Show email verification success alert if the URL matches
     if (location.pathname === "/auth/login/email-verified-successfully") {
       setShowEmailVerificationAlert(true);
-      setShowOnBoarding(true);
     }
   }, [location]);
 
-  const navigate = useNavigate();
-
   const handleClick = () => setShow(!show);
 
-  // Helper function to validate email format
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const loginUser = async () => {
-    // Clear previous messages
-    // setMessage("");
-
-    // Client-side validation
     if (!email || !password) {
-      // setMessage("Please fill in both email and password.");
-      // setMessageColor("red");
+      toast.error("Please fill in both email and password.");
       return;
     }
 
     if (!validateEmail(email)) {
-      // setMessage("Please enter a valid email address.");
-      // setMessageColor("red");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
-    // Proceed with login if inputs are valid
     setLoading(true);
-    // setMessage("The request may take some time, please wait...");
-    // setMessageColor("blue");
-
     try {
-      const credentials = {
-        email: email,
-        password: password,
-      };
-
-      const response = await apiCall("/auth/login", {
-        method: "POST",
-        data: credentials,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      if (response.success) {
-        // Store token in Redux
-        console.log(response.suucess); // Logged in successfully!
-        //console.log("Your token: ", response);
-        // setMessageColor("blue");
-        // setMessage("Login successful! Redirecting...");
-
-        setTimeout(() => {
-          if (showOnBoarding) {
-            navigate("/dashboard/home/onboarding"); // Redirect to dashboard on successful login
-          } else {
-            navigate("/dashboard/home"); // Redirect to dashboard on successful login
-          }
-        }, 1000);
+      const response = await axios.post("https://c11e-41-106-128-126.ngrok-free.app/auth/login", { email, password },
+      );
+      if (response.data.success) {
+        localStorage.setItem("userId", response.data.userData.id);
+        toast.success("Login successful! Redirecting...");
+        navigate("/dashboard/home");
       } else {
-        // setMessageColor("red");
-        // setMessage(response.message);
-
+        toast.error(response.data.detail || "Login failed. Please try again.");
       }
     } catch (error: any) {
-      // console.log("error", error.response.data);
-      toast.error(error.response.data.detail);
-      if (error instanceof Error) {
-        // setMessage(
-        //   "Login failed. Please confirm your credentials and try again."
-        // );
-        // setMessageColor("red");
-      } else {
-        // Handle unexpected error types here
-        // setMessage("An unexpected error occurred.");
-        // setMessageColor("red");
-      }
+      const errorMessage =
+        error.response?.data?.detail || "An unexpected error occurred.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -281,14 +226,6 @@ function LogIn() {
             >
               Log In
             </Button>
-            {/* {message && (
-              <Text
-                color={message.includes("success") ? "green.500" : "red.500"}
-                mb="24px"
-              >
-                {message}
-              </Text>
-            )} */}
           </FormControl>
         </Flex>
         <Flex

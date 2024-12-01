@@ -11,78 +11,38 @@ import Navbar from "../navbar/navbar";
 import post from "../../../assets/img/dashboards/AlgeriePoste.svg 1.svg";
 import documents from "../../../assets/img/dashboards/CardMedia.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function Home() {
   const user = useSelector((state: any) => state.user) as UserInfo;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // fetching lands data:
-  // const fetchLands = async () => {
-  //   try {
-  //     // Directly call apiCall and get the parsed data
-  //     const lands = await apiCall(
-  //       "/land/get-all-lands",
-  //       {
-  //         method: "GET",
-  //         requireAuth: true,
-  //       },
-  //       token
-  //     );
 
-  //     console.log("API Response:", lands); // Log the response to confirm it's an array
-
-  //     //! comment when using dummy data
-  //     // dispatch(setInitialLands(mappedLands));
-  //     // console.log("Initial lands set successfully", mappedLands);
-  //   } catch (error) {
-  //     console.error("Failed to fetch lands:", error);
-  //   }
-  // };
-
-  //! comment when using dummy data
-  // useEffect(() => {
-  //   fetchLands();
-  // }, []);
-
-  // fetching user data!
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        // const profile = await apiCall(
-        //   "/profile/get-profile",
-        //   {
-        //     method: "GET",
-        //     requireAuth: true,
-        //   },
-        //   token
-        // );
+        const profile = await axios.post(`https://c11e-41-106-128-126.ngrok-free.app/auth/profile`, { user_id: localStorage.getItem("userId") },
+        );
+
+        console.log(profile.data)
 
         dispatch(
-          // setUser({
-          //   firstName: profile.first_name,
-          //   lastName: profile.last_name,
-          //   email: profile.email,
-          //   phoneNumber: profile.phone_number,
-          //   country: profile.country,
-          //   userId: profile.user_id,
-          //   profilePicture: profile.profile_picture,
-          //   currentPlan:
-          //     profile.subscription_type === "Basic" ? "Basic" : "premium",
-          // })
           setUser({
-            firstName: "Amel",
-            lastName: "FEDDAG",
-            email: "amel.feddag@ensia.edu.dz",
-            phoneNumber: "+213 555 05 04 96",
-            userId: "",
-            profilePicture: "",
-            currentPlan: "Basic",
+            fullName: profile.data.fullName,
+            email: profile.data.email,
+            phoneNumber: profile.data.phoneNumber,
+            userId: profile.data.id,
+            isActive: profile.data.isActive,
+            ccp: profile.data.ccp,
+            cle: profile.data.cle,
           })
         );
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
+      } catch (e: any) {
+        console.error(
+          "Failed to fetch user profile:",
+          e.response?.data?.detail || e.message
+        );
       }
     };
-
     //! Comment when using dummy data
     fetchUserProfile();
   }, []);

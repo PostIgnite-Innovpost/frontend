@@ -22,6 +22,7 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import DefaultAuth from "../../../layouts/auth/Default";
 import illustration from "../../../assets/img/auth/post.svg";
 import { apiCall } from "../../../services/api";
+import axios from "axios";
 
 function SignUp() {
   // Chakra color mode
@@ -83,31 +84,27 @@ function SignUp() {
 
     setLoading(true);
 
-    const fullname = firstName + " " + lastName;
+    const fullName = firstName + " " + lastName;
     try {
       const userData = {
-        fullname,
+        fullName,
         isAdmin: false,
         phoneNumber: `${phoneNumber}`,
         email,
         password,
       };
-      const response = await apiCall("/auth/register", {
-        method: "POST",
-        data: userData,
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
+      const response = await axios.post('https://c11e-41-106-128-126.ngrok-free.app/auth/register', userData);
 
+      console.log(response?.data)
       toast.success(response.data.message)
       setLoading(false);
     }
     catch (e: any) {
-      toast.error(e?.response.data.detail)
+      toast.error(e?.response?.data?.detail)
     }
     finally {
       console.log('success')
+      window.location.href = '/auth/login'
     }
   };
 

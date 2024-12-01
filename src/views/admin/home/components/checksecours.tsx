@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Flex,
@@ -8,6 +8,7 @@ import {
     FormControl,
     FormLabel,
     VStack,
+    Button
 } from '@chakra-ui/react';
 
 interface CheckSecoursProps {
@@ -25,10 +26,10 @@ interface CheckSecoursProps {
     receiverLastName?: string;
     receiverAddress?: string;
     receiverPhone?: string;
-    date?: string; // Assuming date is a string. If it's a Date object, convert it when rendering.
-    signature?: Blob | string; // Assuming signature is a Blob or URL string.
+    date?: string;
+    signature?: Blob | string;
     type?: string;
-    image?: string; // Assuming res.image is passed as a prop.
+    image?: string;
 }
 
 export default function CheckSecours({
@@ -53,6 +54,11 @@ export default function CheckSecours({
     const signatureUrl =
         typeof signature === 'string' ? signature : URL.createObjectURL(signature);
 
+    const [isEditable, setIsEditable] = useState(false);
+
+    // Toggle the read-only state of the inputs
+    const toggleEditable = () => setIsEditable(!isEditable);
+
     return (
         <Flex direction="column" align="center" p={4} gap={6}>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
@@ -64,39 +70,39 @@ export default function CheckSecours({
                 <VStack spacing={4} flex="1" align="stretch">
                     <FormControl>
                         <FormLabel>Account Number</FormLabel>
-                        <Input value={accountNum} isReadOnly />
+                        <Input value={accountNum} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Key</FormLabel>
-                        <Input value={key} isReadOnly />
+                        <Input value={key} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Amount</FormLabel>
-                        <Input value={amount} isReadOnly />
+                        <Input value={amount} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Amount in Words</FormLabel>
-                        <Input value={amountInWords} isReadOnly />
+                        <Input value={amountInWords} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Sender First Name</FormLabel>
-                        <Input value={senderFirstName} isReadOnly />
+                        <Input value={senderFirstName} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Sender Last Name</FormLabel>
-                        <Input value={senderLastName} isReadOnly />
+                        <Input value={senderLastName} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Sender Address</FormLabel>
-                        <Input value={senderAddress} isReadOnly />
+                        <Input value={senderAddress} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Sender Phone</FormLabel>
-                        <Input value={senderPhone} isReadOnly />
+                        <Input value={senderPhone} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Sender Email</FormLabel>
-                        <Input value={senderEmail} isReadOnly />
+                        <Input value={senderEmail} isReadOnly={!isEditable} />
                     </FormControl>
                 </VStack>
 
@@ -104,27 +110,27 @@ export default function CheckSecours({
                 <VStack spacing={4} flex="1" align="stretch">
                     <FormControl>
                         <FormLabel>Receiver First Name</FormLabel>
-                        <Input value={receiverFirstName} isReadOnly />
+                        <Input value={receiverFirstName} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Receiver Last Name</FormLabel>
-                        <Input value={receiverLastName} isReadOnly />
+                        <Input value={receiverLastName} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Receiver Address</FormLabel>
-                        <Input value={receiverAddress} isReadOnly />
+                        <Input value={receiverAddress} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Receiver Phone</FormLabel>
-                        <Input value={receiverPhone} isReadOnly />
+                        <Input value={receiverPhone} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Date</FormLabel>
-                        <Input value={new Date(date).toLocaleDateString()} isReadOnly />
+                        <Input value={new Date(date).toLocaleDateString()} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Type</FormLabel>
-                        <Input value={type} isReadOnly />
+                        <Input value={type} isReadOnly={!isEditable} />
                     </FormControl>
                     <FormControl>
                         <FormLabel>Signature</FormLabel>
@@ -140,11 +146,21 @@ export default function CheckSecours({
                 </Box>
             )}
 
+            <Flex gap={4}>
+                <Button color='white' width='fit' colorScheme='yellow' onClick={toggleEditable}>
+                    {isEditable ? 'Lock Info' : 'Modify Info'}
+                </Button>
+                <Button color='white' width='fit' colorScheme='blue'>
+                    Validate the operation
+                </Button>
+            </Flex>
+
             {/* Document Review Section */}
             <Box mt={6} p={4} borderWidth="1px" borderRadius="md" width="full" textAlign="center">
                 <Text fontSize="lg" fontWeight="medium">
                     Document Review:
                 </Text>
+                <Text></Text>
             </Box>
         </Flex>
     );
